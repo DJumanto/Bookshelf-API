@@ -3,19 +3,7 @@ const { nanoid } = require('nanoid');
 const books = require('./books');
 const { checkQuery } = require('./queryChecker');
 
-const indexHandler = (req, res) => {
-  const response = res.response({
-    status: 200,
-    message: 'this is index',
-    data: {
-      notes: 'HELLOO',
-    },
-  });
-  response.code(200);
-  return response;
-};
-
-const addNewBook = (req, res) => {
+const addNewBookHandler = (req, res) => {
   // get and set all needed data from payload
   const {
     name, year, author, summary, publisher, pageCount, readPage, reading,
@@ -86,7 +74,7 @@ const addNewBook = (req, res) => {
   return response;
 };
 
-const getAllBooks = (req, res) => {
+const getAllBooksHandler = (req, res) => {
   //  send empty erray if books length is equal to 0
   if (books.length === 0) {
     const response = res.response({
@@ -122,7 +110,7 @@ const getAllBooks = (req, res) => {
   return response;
 };
 
-const getBookById = (req, res) => {
+const getBookByIdHandler = (req, res) => {
   const { bookId } = req.params;
   const book = books.filter((b) => b.id === bookId)[0];
 
@@ -147,7 +135,7 @@ const getBookById = (req, res) => {
   return response;
 };
 
-const editBookById = (req, res) => {
+const editBookByIdHandler = (req, res) => {
   const { bookId } = req.params;
   const index = books.findIndex((b) => b.id === bookId);
 
@@ -213,7 +201,7 @@ const editBookById = (req, res) => {
   return response;
 };
 
-const deleteBookById = (req, res) => {
+const deleteBookByIdHandler = (req, res) => {
   const { bookId } = req.params;
   const index = books.findIndex((b) => b.id === bookId);
   // if the book id is undefined, send code 404
@@ -235,10 +223,9 @@ const deleteBookById = (req, res) => {
 };
 
 module.exports = {
-  indexHandler,
-  addNewBook,
-  getAllBooks,
-  getBookById,
-  editBookById,
-  deleteBookById,
+  addNewBookHandler,
+  getAllBooksHandler,
+  getBookByIdHandler,
+  editBookByIdHandler,
+  deleteBookByIdHandler,
 };
